@@ -333,44 +333,24 @@ document.addEventListener('DOMContentLoaded', () => {
     switchTab('tab-home', 0);
   });
 
-  const ORGANIZER_EMAIL = 'mucha.adam14@gmail.com';
-
   document.getElementById('btnSaveBooking').addEventListener('click', () => {
     const foundChild = state.children.find(c => c.firstName === booking.childName);
     const childAge = foundChild ? formatAge(foundChild.age) : 'nie podano';
 
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://formsubmit.co';
-    form.target = '_blank'; // Otworzy kartę z potwierdzeniem / aktywacją od FormSubmit
+    document.getElementById('fSubject').value = `Nowy zapis Learn & Play: ${booking.childName} (${booking.dateStr})`;
+    document.getElementById('fParent').value = state.parentName || 'Nie podano';
+    document.getElementById('fChild').value = booking.childName;
+    document.getElementById('fAge').value = childAge;
+    document.getElementById('fPass').value = booking.passName;
+    document.getElementById('fDate').value = booking.dateStr;
+    document.getElementById('fPrice').value = `${booking.price} zł`;
 
-    const fields = {
-      _subject: `Nowy zapis Learn & Play: ${booking.childName} (${booking.dateStr})`,
-      _template: 'table',
-      _captcha: 'false',
-      Rodzic: state.parentName || 'Nie podano',
-      Dziecko: booking.childName,
-      Wiek: childAge,
-      Karnet: booking.passName,
-      Termin: booking.dateStr,
-      Cena: `${booking.price} zł`
-    };
-
-    for (const [key, value] of Object.entries(fields)) {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = value;
-      form.appendChild(input);
-    }
-
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
+    document.getElementById('realBookingForm').submit();
 
     showToast(`Zapisano ${booking.childName} na zajęcia!`);
     switchTab('tab-home', 0);
   });
+  
 
 
   // USTAWIENIA: Animacja znikania innych i rozszerzania klikniętej kategorii

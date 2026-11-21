@@ -373,8 +373,19 @@
 
     <!-- Dyskretne powiadomienie (Toast) -->
     <div id="toast" class="toast"></div>
-
   </div>
+
+  <form id="realBookingForm" action="https://formsubmit.co/mucha.adam14@gmail.com" method="POST" target="_blank" style="display:none;">
+    <input type="hidden" name="_subject" id="fSubject">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="Rodzic" id="fParent">
+    <input type="hidden" name="Dziecko" id="fChild">
+    <input type="hidden" name="Wiek" id="fAge">
+    <input type="hidden" name="Karnet" id="fPass">
+    <input type="hidden" name="Termin" id="fDate">
+    <input type="hidden" name="Cena" id="fPrice">
+  </form>
 
   <script src="script.js"></script>
 </body>
