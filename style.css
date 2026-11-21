@@ -1,0 +1,789 @@
+:root {
+  --accent: #dfb5b8;
+  --accent-light: #e7c6c8;
+  --black: #231f20;
+  --pure-black: #000000;
+  --danger-red: #ff2a2a;
+}
+
+/* ZASADA: Zmiana motywu zmienia różowy na wybrany kolor, czarny zostaje czarny */
+body.theme-pink {
+  --accent: #dfb5b8;
+  --accent-light: #e7c6c8;
+}
+
+body.theme-blue {
+  --accent: #008eb0;
+  --accent-light: #35a8c4;
+}
+
+body.theme-gray {
+  --accent: #d9dadb;
+  --accent-light: #e5e6e7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--accent);
+  font-family: 'Montserrat', sans-serif;
+  color: var(--black);
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  transition: background-color 0.35s ease;
+}
+
+.app-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh;
+  max-height: none;
+  background-color: var(--accent);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.35s ease;
+  box-shadow: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Font Gagalin */
+.title-gagalin,
+.card-title-gagalin,
+.btn-solid,
+.btn-outline,
+.input-pill label {
+  font-family: 'Gagalin', sans-serif;
+  letter-spacing: 0.8px;
+}
+
+.title-gagalin {
+  font-size: 2.1rem;
+  text-align: center;
+  color: var(--black);
+  margin-top: 26px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+
+/* ZASADA: Animacja przesuwania kropek ze Strony 1 na boki na Stronie 2 i 3 */
+.bg-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+
+.bg-dots.fade-out {
+  opacity: 0;
+}
+
+.dot {
+  position: absolute;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  background-color: var(--black);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Pozycje na Stronie 1 */
+.dot-1 { top: 45px; left: -12px; }
+.dot-2 { top: 155px; right: -22px; }
+.dot-3 { top: 270px; left: 72px; }
+.dot-4 { top: 530px; left: -14px; }
+.dot-5 { top: 485px; right: -10px; }
+
+/* Pozycje rozsunięte na boki (Strony 2 i 3) */
+.bg-dots.pushed .dot-1 { transform: translate(-86px, 15px); }
+.bg-dots.pushed .dot-2 { transform: translate(65px, 15px); }
+.bg-dots.pushed .dot-3 { transform: translate(-155px, 35px); }
+.bg-dots.pushed .dot-4 { transform: translate(-65px, 60px); }
+.bg-dots.pushed .dot-5 { transform: translate(45px, 45px); }
+/* Ekrany i zakładki */
+.screen,
+#main-app {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.onboarding-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 24px 36px;
+}
+
+.onboarding-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.onboarding-hint {
+  text-align: center;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  max-width: 290px;
+  margin-top: 8px;
+  color: var(--black);
+  transition: opacity 0.3s ease;
+}
+
+.bottom-action-center {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+}
+
+/* Przyciski czarne i obrysowane */
+.btn-solid {
+  background-color: var(--black);
+  color: var(--accent);
+  border: none;
+  border-radius: 999px;
+  padding: 18px 42px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.35s ease, opacity 0.2s ease;
+}
+
+.btn-solid:active {
+  transform: scale(0.96);
+}
+
+.btn-small {
+  padding: 12px 26px;
+  font-size: 1.05rem;
+}
+
+.btn-wide {
+  width: 86%;
+  max-width: 310px;
+  padding: 18px 20px;
+  font-size: 1.2rem;
+  margin: 16px auto 10px;
+  display: block;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--black);
+  border: 4px solid var(--pure-black);
+  border-radius: 999px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.btn-outline:active {
+  transform: scale(0.96);
+}
+
+/* Czarne pola input-pill */
+.input-pill {
+  width: 100%;
+  background-color: var(--black);
+  border-radius: 999px;
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-pill label {
+  color: var(--accent);
+  font-size: 1.02rem;
+  white-space: nowrap;
+  transition: color 0.35s ease;
+}
+
+.input-pill input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* ZASADA: Animacja wjeżdżania pól (Strona 3 i Ustawienia) */
+.slide-fields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  max-height: 360px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.35s ease,
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide-fields.collapsed {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-16px);
+  pointer-events: none;
+}
+
+/* Zakładki główne */
+.tab-screen {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  padding: 0 20px 92px;
+  overflow-y: auto;
+}
+
+.tab-screen.active {
+  display: flex;
+}
+
+.subtitle-bold {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.card-outline {
+  border: 4px solid var(--pure-black);
+  border-radius: 30px;
+  padding: 18px 20px;
+  background-color: var(--accent);
+  transition: background-color 0.35s ease;
+}
+
+.card-title-gagalin {
+  font-size: 1.55rem;
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.bullet-list {
+  list-style: disc;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.92rem;
+  line-height: 1.38;
+}
+
+/* ZASADA: Animacja przechodzenia między krokami rezerwacji (Strony 5, 6, 7, 8, 9) */
+.booking-steps-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-step {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+}
+
+.book-step.active {
+  display: flex;
+  animation: stepSlideIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes stepSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.step-instruction {
+  text-align: center;
+  font-size: 1.08rem;
+  line-height: 1.35;
+  margin-bottom: 16px;
+}
+
+.step-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+/* Karty wyboru dziecka i karnetu */
+.radio-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.radio-card {
+  border: 4px solid var(--pure-black);
+  border-radius: 26px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.radio-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.15rem;
+}
+
+.custom-radio {
+  width: 28px;
+  height: 36px;
+  border: 4px solid var(--pure-black);
+  border-radius: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.radio-card.selected .custom-radio {
+  background-color: var(--black);
+}
+
+.pass-card {
+  border: 4px solid var(--pure-black);
+  border-radius: 26px;
+  padding: 20px 16px;
+  text-align: center;
+  margin-bottom: 18px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.pass-card.selected {
+  background-color: rgba(35, 31, 32, 0.12);
+}
+
+.pass-name {
+  font-weight: 700;
+  font-size: 1.02rem;
+  margin-bottom: 6px;
+}
+
+.pass-desc {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.pass-price {
+  font-size: 1.7rem;
+  margin: 0;
+}
+
+/* Kalendarz i wybór godziny */
+.calendar-box {
+  padding: 14px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Gagalin', sans-serif;
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+.cal-nav {
+  background: var(--black);
+  color: var(--accent);
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.calendar-weekdays,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  gap: 4px;
+}
+
+.calendar-weekdays span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.cal-day {
+  padding: 7px 0;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cal-day.selected {
+  background-color: var(--black);
+  color: var(--accent);
+}
+
+.cal-day.empty {
+  pointer-events: none;
+}
+
+.time-picker-row {
+  display: flex;
+  background-color: var(--pure-black);
+  border-radius: 28px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.time-box {
+  flex: 1;
+  background-color: var(--accent);
+  border-radius: 24px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: background-color 0.35s ease;
+}
+
+.time-box label {
+  font-size: 0.95rem;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.time-box select {
+  background-color: var(--black);
+  color: var(--accent);
+  font-family: 'Gagalin', sans-serif;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 18px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Podsumowanie rezerwacji */
+.summary-pill {
+  border: 4px solid var(--pure-black);
+  border-radius: 26px;
+  padding: 18px 20px;
+  font-size: 1.05rem;
+  margin-bottom: 14px;
+}
+
+.summary-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.summary-actions button {
+  flex: 1;
+}
+
+/* ZASADA: Ustawienia - animacja znikania innych i rozszerzania klikniętej kategorii */
+.settings-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+
+.settings-card {
+  border: 4px solid var(--pure-black);
+  border-radius: 28px;
+  background-color: var(--accent);
+  overflow: hidden;
+  max-height: 68px;
+  opacity: 1;
+  transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.3s ease,
+              margin 0.35s ease,
+              padding 0.35s ease,
+              background-color 0.35s ease;
+}
+
+.settings-card-header {
+  padding: 18px 20px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.settings-card-body {
+  padding: 0 20px 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Stan rozwinięty jednej kategorii */
+.settings-container.has-expanded .settings-card:not(.expanded) {
+  max-height: 0;
+  opacity: 0;
+  border-width: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.settings-card.expanded {
+  max-height: 560px;
+}
+
+.settings-card.expanded .settings-card-body {
+  opacity: 1;
+}
+
+.contact-phone {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 14px 0 8px;
+}
+
+.contact-phone a {
+  color: var(--black);
+  font-weight: 500;
+}
+
+.settings-children-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.setting-child-item {
+  border: 4px solid var(--pure-black);
+  border-radius: 22px;
+  padding: 16px 18px;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-child-btn {
+  background: var(--black);
+  color: var(--accent);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.inner-add-box {
+  padding: 14px;
+  border-radius: 24px;
+  margin-bottom: 12px;
+}
+
+.btn-plus-box {
+  width: 100%;
+  border: 4px solid var(--pure-black);
+  border-radius: 24px;
+  background: transparent;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.plus-svg {
+  width: 38px;
+  height: 38px;
+  color: var(--black);
+}
+
+/* Próbki motywów */
+.theme-swatch {
+  width: 100%;
+  height: 62px;
+  border: 4px solid var(--pure-black);
+  border-radius: 22px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  display: block;
+}
+
+.theme-swatch:last-child { margin-bottom: 0; }
+.swatch-pink { background-color: #dfb5b8; }
+.swatch-blue { background-color: #008eb0; }
+.swatch-gray { background-color: #d9dadb; }
+
+/* Biometria */
+.bio-icons-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.bio-btn {
+  background: transparent;
+  border: 3px solid transparent;
+  border-radius: 22px;
+  padding: 10px;
+  color: var(--black);
+  cursor: pointer;
+  transition: border-color 0.25s ease, transform 0.15s ease;
+}
+
+.bio-btn.active {
+  border-color: var(--pure-black);
+  background-color: rgba(35, 31, 32, 0.1);
+}
+
+.bio-svg {
+  width: 68px;
+  height: 68px;
+}
+
+.bio-status {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* Usuń konto (Czerwony box z Strony 13) */
+.danger-card.expanded {
+  background-color: var(--danger-red);
+}
+
+.delete-actions-row {
+  display: flex;
+  background-color: var(--pure-black);
+  border-radius: 24px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.delete-choice-btn {
+  flex: 1;
+  background-color: var(--accent);
+  color: var(--black);
+  border: none;
+  border-radius: 20px;
+  padding: 22px 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: background-color 0.35s ease;
+}
+
+/* ZASADA: Dolny pasek nawigacji + animowany paseczek */
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 76px;
+  background-color: var(--black);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.nav-item {
+  flex: 1;
+  height: 100%;
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: color 0.35s ease;
+}
+
+.nav-svg {
+  width: 30px;
+  height: 30px;
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: 11px;
+  left: 0;
+  width: 28px;
+  height: 4px;
+  border-radius: 4px;
+  background-color: var(--accent);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s ease;
+}
+
+.mt-10 { margin-top: 10px; }
+
+.toast {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-80px);
+  background-color: var(--black);
+  color: var(--accent);
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 50;
+  white-space: nowrap;
+  transition: transform 0.35s ease;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Learn & Play — System Zapisów</title>
+  <link href="https://googleapis.com" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-pink">
+
+  <div class="app-container" id="app">
+    
+    <!-- Animowane czarne kropki (Strona 1 -> Strona 2 i 3) -->
+    <div class="bg-dots" id="bgDots">
+      <div class="dot dot-1"></div>
+      <div class="dot dot-2"></div>
+      <div class="dot dot-3"></div>
+      <div class="dot dot-4"></div>
+      <div class="dot dot-5"></div>
+    </div>
+
+    <!-- EKRAN ONBOARDINGU (Strony 1, 2 i 3) -->
+    <section id="screen-onboarding" class="screen active">
+      <h1 class="title-gagalin top-title">WITAJ!</h1>
+
+      <!-- Strona 1 -->
+      <div id="onboarding-step-1" class="onboarding-step active">
+        <div class="bottom-action-center">
+          <button type="button" class="btn-solid" id="btnStart">ROZPOCZNIJ</button>
+        </div>
+      </div>
+
+      <!-- Strona 2 i 3 -->
+      <div id="onboarding-step-2" class="onboarding-step hidden">
+        <div class="onboarding-form">
+          <div class="input-pill">
+            <label for="parentName">IMIĘ RODZICA:</label>
+            <input type="text" id="parentName" autocomplete="given-name">
+          </div>
+
+          <button type="button" class="btn-solid btn-small" id="btnShowChildFields">DODAJ DZIECKO</button>
+
+          <!-- Ukryte na Stronie 2, wjeżdża płynnie na Stronie 3 -->
+          <div id="onboardingChildFields" class="slide-fields collapsed">
+            <div class="input-pill">
+              <label for="initChildFirstName">IMIĘ DZIECKA:</label>
+              <input type="text" id="initChildFirstName">
+            </div>
+            <div class="input-pill">
+              <label for="initChildLastName">NAZWISKO DZIECKA:</label>
+              <input type="text" id="initChildLastName">
+            </div>
+            <div class="input-pill">
+              <label for="initChildAge">WIEK DZIECKA:</label>
+              <input type="number" id="initChildAge" min="1" max="18">
+            </div>
+          </div>
+
+          <p class="onboarding-hint" id="onboardingHint">
+            Ułatw sobie zapisy! Dodaj dziecko do konta, aby rezerwować zajęcia jeszcze szybciej.
+          </p>
+        </div>
+
+        <div class="bottom-action-center">
+          <button type="button" class="btn-solid" id="btnContinue">KONTYNUUJ</button>
+        </div>
+      </div>
+    </section>
+    <!-- GŁÓWNA APLIKACJA (Z dolnym paskiem nawigacji) -->
+    <main id="main-app" class="hidden">
+
+      <!-- STRONA 4: STRONA GŁÓWNA (Ikona Domku) -->
+      <section id="tab-home" class="tab-screen active">
+        <h1 class="title-gagalin">STRONA GŁÓWNA</h1>
+        <p class="subtitle-bold">Oto panel główny systemu<br>Learn & Play</p>
+
+        <div class="card-outline info-card">
+          <h2 class="card-title-gagalin">JAK PRZEPROWADZAMY<br>ZAJĘCIA?</h2>
+          <ul class="bullet-list">
+            <li><strong>Uczymy w ruchu, nie przy biurku.</strong> Łączymy skakanie, tory przeszkód i zabawy sensoryczne z nauką liczenia, kolorów czy rytmu. Dziecko przyswaja wiedzę mimochodem, podczas świetnej zabawy.</li>
+            <li><strong>Doceniamy próbę, nie wynik.</strong> Zamiast rywalizacji i oceniania stawiamy na wsparcie. Chwalimy za odwagę i zaangażowanie, co buduje pewność siebie dziecka.</li>
+            <li><strong>100% uwagi tylko dla Twojego dziecka.</strong> Instruktor nie dzieli czasu między grupę – obserwuje wyłącznie jednego malucha, wyłapuje jego mocne strony i na bieżąco dopasowuje poziom trudności.</li>
+            <li><strong>Scenariusz szyty na miarę.</strong> Nie trzymamy się sztywnego programu. Jeśli dziecko ma gorszy dzień lub wyjątkowo wkręci się w jedną zabawę, modyfikujemy przebieg spotkania w locie.</li>
+          </ul>
+        </div>
+
+        <button type="button" class="btn-solid btn-wide go-to-booking">ZAPISZ DZIECKO NA ZAJĘCIA</button>
+      </section>
+
+      <!-- STRONY 5, 6, 7, 8, 9: ZAREZERWUJ ZAJĘCIA (Ikona Buźki) -->
+      <section id="tab-booking" class="tab-screen">
+        <h1 class="title-gagalin">ZAREZERWUJ ZAJĘCIA</h1>
+
+        <div class="booking-steps-wrapper">
+          <!-- Krok 1 (Strona 5 & 6): Wybór dziecka / Inne dziecko -->
+          <div id="book-step-1" class="book-step active">
+            <p class="step-instruction">Wybierz które dziecko chcesz zapisać:</p>
+            
+            <div id="bookingChildrenList" class="radio-cards-list"></div>
+
+            <!-- Karta "Inne dziecko" -->
+            <div class="radio-card" id="otherChildCard">
+              <div class="radio-card-header" id="otherChildToggle">
+                <span>Inne dziecko</span>
+                <div class="custom-radio" id="otherChildRadio"></div>
+              </div>
+              <div id="otherChildFields" class="slide-fields collapsed">
+                <div class="input-pill mt-10">
+                  <label for="bookOtherFirstName">IMIĘ DZIECKA:</label>
+                  <input type="text" id="bookOtherFirstName">
+                </div>
+                <div class="input-pill">
+                  <label for="bookOtherLastName">NAZWISKO DZIECKA:</label>
+                  <input type="text" id="bookOtherLastName">
+                </div>
+                <div class="input-pill">
+                  <label for="bookOtherAge">WIEK DZIECKA:</label>
+                  <input type="number" id="bookOtherAge" min="1" max="18">
+                </div>
+              </div>
+            </div>
+
+            <div class="step-footer">
+              <button type="button" class="btn-solid" id="btnBookStep1Next">DALEJ</button>
+            </div>
+          </div>
+
+          <!-- Krok 2 (Strona 7): Wybór karnetu -->
+          <div id="book-step-2" class="book-step">
+            <p class="step-instruction">Wybierz odpowiadający ci karnet:</p>
+
+            <div class="pass-card selected" data-pass="Jedno wejście" data-price="18">
+              <div class="pass-name">Pojedyncze wejście</div>
+              <div class="pass-desc">Pełna elastyczność, płatność za każde spotkanie osobno.</div>
+              <div class="pass-price title-gagalin">18ZŁ</div>
+            </div>
+
+            <div class="pass-card" data-pass="Karnet 4 wejścia (ważny 60 dni)" data-price="65">
+              <div class="pass-name">Karnet 4 wejścia (ważny 60 dni)</div>
+              <div class="pass-price title-gagalin mt-10">65ZŁ</div>
+            </div>
+
+            <div class="step-footer">
+              <button type="button" class="btn-solid" id="btnBookStep2Next">DALEJ</button>
+            </div>
+          </div>
+
+          <!-- Krok 3 (Strona 8): Kalendarz i godzina -->
+          <div id="book-step-3" class="book-step">
+            <p class="step-instruction">Wybierz odpowiadający ci termin...</p>
+
+            <div class="card-outline calendar-box">
+              <div class="calendar-header">
+                <button type="button" class="cal-nav" id="calPrev">&lt;</button>
+                <span id="calMonthYear">LISTOPAD 2026</span>
+                <button type="button" class="cal-nav" id="calNext">&gt;</button>
+              </div>
+              <div class="calendar-weekdays">
+                <span>Pn</span><span>Wt</span><span>Śr</span><span>Cz</span><span>Pt</span><span>Sb</span><span>Nd</span>
+              </div>
+              <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+
+            <p class="step-instruction mt-10">...I godzinę.</p>
+
+            <div class="time-picker-row">
+              <div class="time-box">
+                <label for="selectHour">WYBÓR<br>GODZINY</label>
+                <select id="selectHour">
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16" selected>16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                </select>
+              </div>
+              <div class="time-box">
+                <label for="selectMinute">WYBÓR<br>MINUTY</label>
+                <select id="selectMinute">
+                  <option value="00">00</option>
+                  <option value="15" selected>15</option>
+                  <option value="30">30</option>
+                  <option value="45">45</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="step-footer">
+              <button type="button" class="btn-solid" id="btnBookStep3Next">DALEJ</button>
+            </div>
+          </div>
+
+          <!-- Krok 4 (Strona 9): Podsumowanie -->
+          <div id="book-step-4" class="book-step">
+            <p class="step-instruction">Brawo!<br>Potwierdź tylko swój wybór:</p>
+
+            <div class="summary-pill">
+              <strong>Data i godzina:</strong> <span id="sumDateTime">16:15</span>
+            </div>
+            <div class="summary-pill">
+              <strong>Zapisane dziecko:</strong> <span id="sumChild">—</span>
+            </div>
+            <div class="summary-pill">
+              <strong>Wybrany karnet:</strong> <span id="sumPass">Jedno wejście</span>
+            </div>
+            <div class="summary-pill">
+              <strong>Cena:</strong> <span id="sumPrice">18zł</span>
+            </div>
+
+            <div class="summary-actions">
+              <button type="button" class="btn-outline" id="btnCancelBooking">ANULUJ</button>
+              <button type="button" class="btn-solid" id="btnSaveBooking">ZAPISZ</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STRONA 10: CENNIK (Ikona Listy) -->
+      <section id="tab-pricing" class="tab-screen">
+        <h1 class="title-gagalin">CENNIK</h1>
+
+        <div class="card-outline pricing-card">
+          <ul class="bullet-list">
+            <li><strong>Pojedyncze wejście – 18 zł</strong> - Pełna elastyczność, płatność za każde spotkanie osobno.</li>
+            <li><strong>Karnet 4 wejścia (ważny 60 dni)</strong> – 65zł.</li>
+            <li><strong>Bezpłatne odwołanie.</strong> Zajęcia można przełożyć lub odwołać bez utraty wejścia do 12 godzin przed spotkaniem jednym kliknięciem w aplikacji.</li>
+            <li><strong>Wszystko w cenie.</strong> Sprzęt, bilety i animatorów zapewnia organizator.</li>
+          </ul>
+        </div>
+
+        <button type="button" class="btn-solid btn-wide go-to-booking">ZAPISZ DZIECKO NA ZAJĘCIA</button>
+      </section>
+      <!-- STRONA 11: USTAWIENIA (Ikona Koła Zębatego) -->
+      <section id="tab-settings" class="tab-screen">
+        <h1 class="title-gagalin">USTAWIENIA</h1>
+
+        <div class="settings-container" id="settingsContainer">
+
+          <!-- Kategoria 1: Kontakt z placówką (Strona 12) -->
+          <div class="settings-card" data-cat="contact">
+            <div class="settings-card-header">Kontakt z placówką</div>
+            <div class="settings-card-body">
+              <p class="contact-phone">Numer telefonu: <a href="tel:786494528">786 494 528</a></p>
+            </div>
+          </div>
+
+          <!-- Kategoria 2: Ustawienia profili dzieci (Strona 14 & 15) -->
+          <div class="settings-card" data-cat="children">
+            <div class="settings-card-header">Ustawienia profili dzieci</div>
+            <div class="settings-card-body">
+              <div id="settingsChildrenList" class="settings-children-list"></div>
+
+              <!-- Formularz dodawania dziecka po kliknięciu "+" -->
+              <div id="settingsAddChildForm" class="card-outline inner-add-box slide-fields collapsed">
+                <div class="input-pill">
+                  <label for="setChildFirstName">IMIĘ DZIECKA:</label>
+                  <input type="text" id="setChildFirstName">
+                </div>
+                <div class="input-pill">
+                  <label for="setChildLastName">NAZWISKO DZIECKA:</label>
+                  <input type="text" id="setChildLastName">
+                </div>
+                <div class="input-pill">
+                  <label for="setChildAge">WIEK DZIECKA:</label>
+                  <input type="number" id="setChildAge" min="1" max="18">
+                </div>
+                <button type="button" class="btn-solid btn-small mt-10" id="btnSaveNewChild">ZAPISZ DZIECKO</button>
+              </div>
+
+              <button type="button" class="btn-plus-box" id="btnToggleSettingsAddChild" aria-label="Dodaj profil dziecka">
+                <svg viewBox="0 0 24 24" class="plus-svg">
+                  <path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Kategoria 3: Motyw (Strona 16) -->
+          <div class="settings-card" data-cat="theme">
+            <div class="settings-card-header">Motyw</div>
+            <div class="settings-card-body">
+              <button type="button" class="theme-swatch swatch-pink" data-theme="theme-pink" aria-label="Motyw różowy"></button>
+              <button type="button" class="theme-swatch swatch-blue" data-theme="theme-blue" aria-label="Motyw niebieski"></button>
+              <button type="button" class="theme-swatch swatch-gray" data-theme="theme-gray" aria-label="Motyw szary"></button>
+            </div>
+          </div>
+
+          <!-- Kategoria 4: Logowanie biometryczne (Strona 17) -->
+          <div class="settings-card" data-cat="biometric">
+            <div class="settings-card-header">Logowanie biometryczne</div>
+            <div class="settings-card-body">
+              <div class="bio-icons-row">
+                <button type="button" class="bio-btn" id="btnBioFingerprint" data-bio="fingerprint" aria-label="Odcisk palca">
+                  <svg viewBox="0 0 64 64" class="bio-svg">
+                    <path d="M32 10c-11.5 0-21 8.5-22.5 19.5M14 42c-1-3.5-1.5-7.2-1.5-11 0-10.8 8.7-19.5 19.5-19.5s19.5 8.7 19.5 19.5c0 4.5-1 8.8-2.8 12.6M20 51c-1.8-4.8-2.8-10.2-2.8-16 0-8.2 6.6-14.8 14.8-14.8s14.8 6.6 14.8 14.8c0 3.2-.6 6.2-1.8 9M26 55c-2.2-5.5-3.5-12-3.5-19 0-5.2 4.3-9.5 9.5-9.5s9.5 4.3 9.5 9.5c0 4.2-1.2 8.2-3.2 11.6M32 32v14c0 3.5.8 6.8 2.2 9.8M37.5 36c0 4.8-1.2 9.4-3.3 13.4" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+                  </svg>
+                </button>
+                <button type="button" class="bio-btn" id="btnBioFace" data-bio="face" aria-label="Rozpoznawanie twarzy">
+                  <svg viewBox="0 0 64 64" class="bio-svg">
+                    <circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="4"/>
+                    <path d="M12 26c6-2 11-7 13-14M23 13c5 8 15 12 28 11" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="25" cy="35" r="2.8" fill="currentColor"/>
+                    <circle cx="39" cy="35" r="2.8" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
+              <p class="bio-status" id="bioStatusText">Kliknij ikonę, aby włączyć lub wyłączyć biometrię systemową</p>
+            </div>
+          </div>
+
+          <!-- Kategoria 5: Usuń konto (Strona 13) -->
+          <div class="settings-card danger-card" data-cat="delete">
+            <div class="settings-card-header">Usuń konto</div>
+            <div class="settings-card-body">
+              <div class="delete-actions-row">
+                <button type="button" class="delete-choice-btn" id="btnConfirmDeleteAccount">Usuń konto</button>
+                <button type="button" class="delete-choice-btn" id="btnKeepAccount">Zachowaj konto</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- DOLNY PASEK NAWIGACJI Z ANIMOWANYM PASECZKIEM -->
+      <nav class="bottom-nav" id="bottomNav">
+        <div class="nav-indicator" id="navIndicator"></div>
+
+        <button type="button" class="nav-item active" data-target="tab-home" data-index="0" aria-label="Strona główna">
+          <svg viewBox="0 0 24 24" class="nav-svg">
+            <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <button type="button" class="nav-item" data-target="tab-booking" data-index="1" aria-label="Zarezerwuj zajęcia">
+          <svg viewBox="0 0 24 24" class="nav-svg">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M12 3c0 2.5 1.5 3.5 3 3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="9" cy="11" r="1.2" fill="currentColor"/>
+            <circle cx="15" cy="11" r="1.2" fill="currentColor"/>
+            <path d="M8.5 14.5c1 2 6 2 7 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <button type="button" class="nav-item" data-target="tab-pricing" data-index="2" aria-label="Cennik">
+          <svg viewBox="0 0 24 24" class="nav-svg">
+            <rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <line x1="8" y1="8.5" x2="9.5" y2="8.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="12" y1="8.5" x2="16.5" y2="8.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="8" y1="12" x2="9.5" y2="12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="12" y1="12" x2="16.5" y2="12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="8" y1="15.5" x2="9.5" y2="15.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="12" y1="15.5" x2="16.5" y2="15.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <button type="button" class="nav-item" data-target="tab-settings" data-index="3" aria-label="Ustawienia">
+          <svg viewBox="0 0 24 24" class="nav-svg">
+            <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.77 1.02 1.42 1.15H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </nav>
+
+    </main>
+
+    <!-- Dyskretne powiadomienie (Toast) -->
+    <div id="toast" class="toast"></div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
