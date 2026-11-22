@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     childName: '',
     isOtherChild: false,
     passName: 'Jedno wejście',
-    price: 18,
+    price: 10,
     dateStr: '',
     hour: '16',
     minute: '15'
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast(`Zapisano ${booking.childName} na zajęcia!`);
     switchTab('tab-home', 0);
   });
-  
+
 
 
   // USTAWIENIA: Animacja znikania innych i rozszerzania klikniętej kategorii
